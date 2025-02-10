@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pastex</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff00;
+            font-family: monospace;
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        textarea, .custom-file-upload, .file-uploaded {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 5px;
+            margin: 5px;
+            font-family: monospace;
+            width: 300px;
+        }
+
+        button {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 5px;
+            margin: 5px;
+            font-family: monospace;
+            width: 310px;
+        }
+        textarea {
+            height: 150px;
+            resize: none;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .custom-file-upload {
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+        }
+        .file-uploaded {
+            display: none;
+            cursor: pointer;
+            text-align: center;
+            background-color: #333;
+        }
+        button:hover, .custom-file-upload:hover {
+            background-color: #00ff00;
+            color: #0d0d0d;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>pastex</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <textarea name="text" placeholder="Type or paste your text here..." oninput="toggle()"></textarea><br>
+        <label for="file-upload" class="custom-file-upload" id="upload-label">Upload File</label>
+        <input type="file" id="file-upload" name="file" onchange="upload()">
+        
+        <div id="file-text" class="file-uploaded" onclick="remove()">File Uploaded - Click to Remove</div>
+        
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        function toggle() {
+            const textarea = document.querySelector('textarea');
+            const uploadLabel = document.getElementById('upload-label');
+            if (textarea.value.trim() === '') {
+                uploadLabel.style.display = 'inline-block'; 
+            } else {
+                uploadLabel.style.display = 'none';
+            }
+        }
+
+        function upload() {
+            const textarea = document.querySelector('textarea');
+            const uploadLabel = document.getElementById('upload-label');
+            const uploadtext = document.getElementById('file-text');
+
+            textarea.style.display = 'none';
+            uploadLabel.style.display = 'none';
+            
+            uploadtext.style.display = 'inline-block';
+
+            textarea.value = '';
+        }
+
+        function remove() {
+            const textarea = document.querySelector('textarea');
+            const uploadLabel = document.getElementById('upload-label');
+            const uploadtext = document.getElementById('file-text');
+
+            textarea.style.display = 'inline-block';
+            uploadLabel.style.display = 'inline-block';
+            
+            uploadtext.style.display = 'none';
+
+            document.getElementById('file-upload').value = '';
+        }
+        
+        toggle();
+    </script>
+</body>
+</html>
